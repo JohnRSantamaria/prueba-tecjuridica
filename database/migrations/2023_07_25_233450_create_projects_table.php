@@ -15,6 +15,15 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->string('avatar')->nullable();
+            $table->string('alias')->unique();
+            $table->enum('status', ['iniciado', 'en progreso', 'completado'])->default('iniciado');
+            $table->date('initial_date')->nullable();
+            $table->date('final_date')->nullable();
+            $table->unsignedBigInteger('leader_user_id');
+            $table->foreign('leader_user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

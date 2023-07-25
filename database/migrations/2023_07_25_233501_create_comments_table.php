@@ -15,7 +15,15 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_object_id');
+            $table->unsignedBigInteger('parent_comment_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->string('title');
+            $table->text('comment');
+            $table->json('tags')->nullable();
             $table->timestamps();
+    
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

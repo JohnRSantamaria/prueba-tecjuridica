@@ -15,6 +15,18 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('parent_task_id')->nullable();
+            $table->string('name');
+            $table->text('description');
+            $table->string('alias')->unique();
+            $table->enum('status', ['pendiente', 'en progreso', 'completada'])->default('pendiente');
+            $table->date('initial_date')->nullable();
+            $table->date('final_date')->nullable();
+            $table->json('assigned_users')->nullable();
+            $table->json('time_used')->nullable();
+            $table->integer('percentage')->default(0);
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')->references('id')->on('projects');
             $table->timestamps();
         });
     }
